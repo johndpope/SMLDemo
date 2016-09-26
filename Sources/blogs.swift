@@ -41,9 +41,9 @@ final class BlogsResources {
                 
                 let components = string.components(separatedBy: "::")
                 if components.count < 3 {
-                    b.append("<\(components[0])>\(components[2])</\(components[0])>")
+                    b.append("<\(components[0])>\(components[1])</\(components[0])>")
                 } else {
-                    b.append("<\(components[0]) \(components[1])>\(components[1])</\(components[0])>")
+                    b.append("<\(components[0]) \(components[1])>\(components[2])</\(components[0])>")
                 }
 
                 return true
