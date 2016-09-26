@@ -3,7 +3,6 @@ import SMLKit
 import SXF97
 import Foundation
 
-var root = ProcessInfo.processInfo.arguments[1]
 var port: in_port_t?
 if ProcessInfo.processInfo.arguments.count < 2 {
     /* so called index just a file indexing my blogs post to a url reference */
@@ -18,7 +17,7 @@ if ProcessInfo.processInfo.arguments.count == 2 {
         exit(0)
     }
     port = in_port_t(port_val)
-    print("Launched at 127.0.0.1:\(port)/!!!")
+    print("Launched at 127.0.0.1:\(port_val)/!!!")
 }
 
 SMLInit(moduleName: "Demo", mode: port == nil ? .unix : .inet(port!)) {
