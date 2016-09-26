@@ -39,13 +39,13 @@ final class BlogsResources {
                     return true
                 }
                 
-                let com = string.components(separatedBy: "->")
-                if com[0] == "a" {
-                    b.append("<a href=\(com[1])>\(com[2])</a>")
-                    return true
+                let components = string.components(separatedBy: "::")
+                if components.count < 3 {
+                    b.append("<\(components[0])>\(components[2])</\(components[0])>")
+                } else {
+                    b.append("<\(components[0]) \(components[1])>\(components[1])</\(components[0])>")
                 }
-                
-                b.append("<\(com[0])>\(com[1])</\(com[0])>")
+
                 return true
             }
             body = b
@@ -56,6 +56,9 @@ final class BlogsResources {
     /* /2016/September/spartanX.html */ /*/home/.../root */ /* sites */
     static func generate_html(for path: String, root: String, base: String) -> String {
         var pp = path
+        if path == "/\(base)" {
+            return ""
+        }
         
         pp.removeSubrange(path.startIndex..<path.index(path.startIndex, offsetBy: 2 + base.characters.count))
         let file_path = root + "\(base)/" + pp.replacingOccurrences(of: "/", with: ".") + ".resource"
