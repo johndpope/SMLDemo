@@ -13,6 +13,7 @@ func index_sml() -> String {
  return html {[
         head() {[
             tag("title") { "This is a SML demo" },
+            css("/css/style.css"),
             script("alert('Welcome to SML Demo!!!')")
         ]},
         body() {[
@@ -24,7 +25,7 @@ func index_sml() -> String {
             },
             tag("p") {[
                 "SML is a swift package, any SML web content is valid swift code, thus can be use on everywhere swift can be use. It is Ruby on Rails of Swift, the major difference between ruby-on-rails, php and SML is that both ruby-on-rails and php are \"putting code inside html\", while SML is about \"putting html content inline with code\".", "</br>",
-                "As a result, since swift is a fast, super-type-safe, compile time language, it guarantees that all tags are closed safely, guarantees no code injection counld happen (Of cause no guarantee for unsafe SQL use) and maximize performance.", "</br>",
+                "As a result, since swift is a fast, super-type-safe, compile time language, it guarantees that all tags are closed safely, guarantees no code injection could happen (Of cause no guarantee for unsafe SQL use) and maximize performance.", "</br>",
             ]},
             tag("h2") {
                 "How it works"

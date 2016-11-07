@@ -18,18 +18,26 @@ if ProcessInfo.processInfo.arguments.count == 2 {
         exit(0)
     }
     port = in_port_t(port_val)
-    print("Launched at 127.0.0.1:\(port)/!!!")
+    print("Launched at 127.0.0.1:\(port!)/!!!")
 }
 
-SMLInit(moduleName: "Demo", mode: port == nil ? .unix : .inet(port!)) {
-    request -> HTTPResponse? in
-    
-    if request.uri.path == "/" || request.uri.path == "/index.html" {
-        return HTTPResponse(status: 200, text: index_sml())
-    } 
-    
-    if request.uri.path == "/dynamic" {
-        return HTTPResponse(status: 200, text: dynamic())
-    }
-    return nil
+var pathc = ProcessInfo.processInfo.arguments[0].components(separatedBy: "/")
+
+pathc.removeLast(3)
+
+let static_files_path = pathc.reduce("") {"\($0)\($1)/"}
+
+let service = SMLService()
+
+// we server our stylesheet as static file
+service.addStaticFileSource(root: static_files_path, as: "/")
+
+// index.html never changes in this demo, so we set it as static content
+service.addStaticContent(uri: "/", content: index_sml().data(using: .utf8)!)
+
+// our dynamic web content
+service.setRoute(uri: "/dynamic") { req in
+    return HTTPResponse(status: 200, text: dynamic())
 }
+
+SMLInit(moduleName: "Demo", mode: port == nil ? .unix : .inet(port!), router: service)
